@@ -10,11 +10,14 @@ call plug#begin('~/.vim/plugged')
   " Make sure you use single quotes
   " Better folding
   Plug 'tmhedberg/SimpylFold'
+  Plug 'Konfekt/FastFold'
+
   " Indentation
   Plug 'Vimjas/vim-python-pep8-indent'
 
   " Syntax highlighting
   Plug 'nvie/vim-flake8'
+  Plug 'vim-python/python-syntax' 
   Plug 'vim-syntastic/syntastic'
   Plug 'dense-analysis/ale'
   Plug 'sheerun/vim-polyglot'
@@ -55,44 +58,12 @@ call plug#begin('~/.vim/plugged')
   " Testing
   Plug 'vim-test/vim-test'
 
-  " Distraction free
-  Plug 'junegunn/goyo.vim'
-  Plug 'junegunn/limelight.vim'
-
-
 call plug#end()
 " Leader
 let mapleader = ","
 
-" Limelight settings "
-nmap <Leader>l <Plug>(Limelight)
-xmap <Leader>l <Plug>(Limelight)
-" Color name (:help cterm-colors) or ANSI code
-let g:limelight_conceal_ctermfg = 'gray'
-let g:limelight_conceal_ctermfg = 240
-
-" Color name (:help gui-colors) or RGB color
-let g:limelight_conceal_guifg = 'DarkGray'
-let g:limelight_conceal_guifg = '#777777'
-
-" Default: 0.5
-let g:limelight_default_coefficient = 0.2
-
-" Number of preceding/following paragraphs to include (default: 0)
-let g:limelight_paragraph_span = 5
-
-" Beginning/end of paragraph
-"   When there's no empty line between the paragraphs
-"   and each paragraph starts with indentation
-let g:limelight_bop = '^\s'
-let g:limelight_eop = '\ze\n^\s'
-
-" Highlighting priority (default: 10)
-"   Set it to -1 not to overrule hlsearch
-let g:limelight_priority = 10
-" Enter Limelight with Goyo
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
+" Ctrl-p
+let g:ctrlp_show_hidden = 1 " show hidden files (dotfiles)
 
 " Testing macros
 " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
@@ -119,8 +90,8 @@ let g:vimteractive_bracketed_paste_default = 0
 let g:vimteractive_vertical = 1        " Vertically split terminals
 
 " Syntax highlights
-let python_highlight_all=1
 syntax on
+let python_highlight_all=1
 
 " Formatting
 autocmd BufWritePost *.py execute ':Black'
@@ -160,7 +131,7 @@ nnoremap <C-H> <C-W><C-H>
 " Folding
 nnoremap <space> za
 set foldmethod=indent
-set foldlevel=3
+set foldlevel=2
 
 " Cursor settings
 let &t_SI = "\<esc>[5 q" " I beam cursor for insert mode
