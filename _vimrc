@@ -52,13 +52,23 @@ call plug#begin('~/.vim/plugged')
   Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
   " Markdown 
-  Plug 'plasticboy/vim-markdown'
-  Plug 'godlygeek/tabular'
+  Plug 'reedes/vim-pencil'
 
   " Testing
   Plug 'vim-test/vim-test'
 
 call plug#end()
+"Markdown conceal
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+
+" Pencil autostart
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+augroup END
+
 " Leader
 let mapleader = ","
 
