@@ -65,6 +65,18 @@ let mapleader = ","
 " Ctrl-p
 let g:ctrlp_show_hidden = 1 " show hidden files (dotfiles)
 
+" Backup and swap files in specific temp directory
+if has('win32')
+  set directory=$HOME/AppData/Local/Temp/
+  set backupdir=$HOME/AppData/Local/Temp/
+  set undodir=$HOME/AppData/Local/Temp/
+endif
+if has('unix')
+  set directory=$HOME/tmp/
+  set backupdir=$HOME/tmp/
+  set undodir=$HOME/tmp/
+endif
+
 " Testing macros
 " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
 nmap <silent> t<C-n> :TestNearest<CR>
