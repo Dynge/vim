@@ -45,7 +45,7 @@ call plug#begin('~/.vim/plugged')
 
   " Git
   Plug 'tpope/vim-fugitive'
-  Plug 'christoomey/vim-conflicted'
+  Plug 'chrismey/vim-conflicted'
 
   " Powerline
   Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
