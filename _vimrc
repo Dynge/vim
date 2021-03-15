@@ -6,8 +6,6 @@ set encoding=utf-8
 " Specify a directory for plugins
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-
-  " Make sure you use single quotes
   " Better folding
   Plug 'tmhedberg/SimpylFold'
   Plug 'Konfekt/FastFold'
@@ -19,14 +17,14 @@ call plug#begin('~/.vim/plugged')
   Plug 'nvie/vim-flake8'
   Plug 'vim-python/python-syntax' 
   Plug 'vim-syntastic/syntastic'
-  Plug 'dense-analysis/ale'
   Plug 'sheerun/vim-polyglot'
+  Plug 'mtdl9/vim-log-highlighting'
+
+  " List of methods and functions in file
+  Plug 'majutsushi/tagbar'
 
   " Formatting
   Plug 'ambv/black'
-
-  " Scrolling smooter
-  Plug 'psliwka/vim-smoothie'
 
   " Smart commenting
   Plug 'preservim/nerdcommenter'
@@ -42,8 +40,8 @@ call plug#begin('~/.vim/plugged')
 
   " File browsing
   Plug 'scrooloose/nerdtree'
-  Plug 'kien/ctrlp.vim'
-  Plug 'mileszs/ack.vim'
+  Plug 'junegunn/fzf'
+  Plug 'junegunn/fzf.vim'
 
   " Git
   Plug 'tpope/vim-fugitive'
@@ -52,28 +50,41 @@ call plug#begin('~/.vim/plugged')
   Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
   " Markdown 
+  Plug 'godlygeek/tabular'
+  Plug 'plasticboy/vim-markdown'
+
+  " Writing 
   Plug 'reedes/vim-pencil'
 
   " Testing
   Plug 'vim-test/vim-test'
 
 call plug#end()
-"Markdown conceal
-let g:vim_markdown_conceal = 0
-let g:vim_markdown_conceal_code_blocks = 0
-
-" Pencil autostart
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
-  autocmd FileType text         call pencil#init()
-augroup END
 
 " Leader
 let mapleader = ","
 
+" Cursor line
+set cursorline
+
+" Fixing scroll speed
+"set lazyredraw
+"set regexpengine=1
+
+" Session hotkeys
+let g:sessions_dir = '$HOME/.vim/vim-sessions'
+exec 'nnoremap <Leader>ss :mks! ' . g:sessions_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
+exec 'nnoremap <Leader>sr :so ' . g:sessions_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
+
+
+"Markdown conceal
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+
+
 " Ctrl-p
-let g:ctrlp_show_hidden = 1 " show hidden files (dotfiles)
+nmap <C-P> :FZF<CR>
+" let g:ctrlp_show_hidden = 1
 
 " Backup and swap files in specific temp directory
 if has('win32')
@@ -102,7 +113,6 @@ colorscheme onehalfdark
 " Powerline options
 set laststatus=2 " Always display status bar
 
-
 " ESC mapping
 :imap kj <Esc>
 
@@ -123,12 +133,33 @@ let g:ale_linters = {
       \   'python': ['flake8', 'pylint'],
       \   'ruby': ['standardrb', 'rubocop'],
       \   'javascript': ['eslint'],
+      \   'rst': ['rstcheck'],
+      \   'java': ['javac'],
+      \   'xml': ['xmllint'],
+      \   'css': ['stylelint'],
       \}
 let g:ale_fixers = {
-      \    'python': ['yapf'],
+      \   'python': ['yapf'],
+      \   'xml': ['xmllint'],
+      \   'java': ['uncrustify'],
+      \   'c': ['uncrustify'],
+      \   'css': ['prettier'],
       \}
+let g:ale_lint_on_text_changed = 'always'
 nmap <F10> :ALEFix<CR>
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
+" Shorten error/warning flags
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+" I have some custom icons for errors and warnings but feel free to change them.
+let g:ale_sign_error = '✘✘'
+let g:ale_sign_warning = '⚠⚠'
+
+"TagBar
+" Ctrl-b to open Tagbar
+map <C-b> :TagbarToggle<CR>
+" Path to Ctags exe
+let g:tagbar_ctags_bin = '~/Documents/ctags/ctags-2021-02-09_p5.9.20210207.0-3-gee5f9c55-x64/ctags.exe'
 
 " Line numbering
 set relativenumber
