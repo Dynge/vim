@@ -72,6 +72,9 @@ set cursorline
 "set lazyredraw
 "set regexpengine=1
 
+" Git
+set stl+=%{ConflictedVersion()}
+
 " Session hotkeys
 let g:sessions_dir = '$HOME/.vim/vim-sessions'
 exec 'nnoremap <Leader>ss :mks! ' . g:sessions_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
