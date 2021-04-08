@@ -2,26 +2,31 @@
 source $VIMRUNTIME/vimrc_example.vim
 
 set encoding=utf-8
+set nocompatible
 
 " Specify a directory for plugins
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
   " Better folding
   Plug 'tmhedberg/SimpylFold'
+  Plug 'pseewald/vim-anyfold'
   Plug 'Konfekt/FastFold'
 
   " Indentation
   Plug 'Vimjas/vim-python-pep8-indent'
 
   " Syntax highlighting
-  Plug 'nvie/vim-flake8'
-  Plug 'vim-python/python-syntax' 
-  Plug 'vim-syntastic/syntastic'
+  Plug 'dense-analysis/ale'
+  Plug 'uiiaoo/java-syntax.vim'
   Plug 'sheerun/vim-polyglot'
-  Plug 'mtdl9/vim-log-highlighting'
+  Plug 'yyq123/vim-syntax-logfile'
+  Plug 'mechatroner/rainbow_csv'
 
   " List of methods and functions in file
   Plug 'majutsushi/tagbar'
+
+  " Errors
+  Plug 'vim-syntastic/syntastic'
 
   " Formatting
   Plug 'ambv/black'
@@ -34,46 +39,76 @@ call plug#begin('~/.vim/plugged')
 
   " Colors
   Plug 'sonph/onehalf', { 'rtp': 'vim' }
+  Plug 'ryanoasis/vim-devicons'
 
   " Ipython
   Plug 'williamjameshandley/vimteractive'
 
   " File browsing
   Plug 'scrooloose/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
 
   " Git
   Plug 'tpope/vim-fugitive'
-  Plug 'christoomey/vim-conflicted'
+  Plug 'airblade/vim-gitgutter'
 
   " Powerline
-  Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 
-  " Markdown 
+  " Markdown
   Plug 'godlygeek/tabular'
   Plug 'plasticboy/vim-markdown'
 
-  " Writing 
+  " Writing
   Plug 'reedes/vim-pencil'
 
   " Testing
   Plug 'vim-test/vim-test'
 
-call plug#end()
+  " Working Directory
+  Plug 'airblade/vim-rooter'
 
+call plug#end()
 " Leader
 let mapleader = ","
+
+" Syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" NERDTree settings
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+
+nmap <leader>l :bnext<CR>
+nmap <leader>h :bprevious<CR>
+nmap <leader>bl :ls<CR>
+
+" Tab Settings
+nmap <leader>tl :tabnext<CR>
+nmap <leader>th :tabprevious<CR>
+
+" Rooter settings
+let g:rooter_patterns = ['.git', 'Makefile', 'setup.py', 'pom.xml']
 
 " Cursor line
 set cursorline
 
 " Fixing scroll speed
-"set lazyredraw
-"set regexpengine=1
-
-" Git
-set stl+=%{ConflictedVersion()}
+set lazyredraw
+set regexpengine=1
 
 " Session hotkeys
 let g:sessions_dir = '$HOME/.vim/vim-sessions'
@@ -130,7 +165,7 @@ syntax on
 let python_highlight_all=1
 
 " Formatting
-autocmd BufWritePost *.py execute ':Black'
+"autocmd BufWritePost *.py execute ':Black'
 
 " ALE
 let g:ale_linters = {
@@ -187,8 +222,9 @@ nnoremap <C-H> <C-W><C-H>
 
 " Folding
 nnoremap <space> za
-set foldmethod=indent
 set foldlevel=2
+filetype plugin indent on
+autocmd Filetype java AnyFoldActivate
 
 " Cursor settings
 let &t_SI = "\<esc>[5 q" " I beam cursor for insert mode
