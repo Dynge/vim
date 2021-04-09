@@ -22,6 +22,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'yyq123/vim-syntax-logfile'
   Plug 'mechatroner/rainbow_csv'
 
+  " AutoCompletion
+  Plug 'codota/tabnine-vim'
+
   " List of methods and functions in file
   Plug 'majutsushi/tagbar'
 
@@ -71,6 +74,8 @@ call plug#begin('~/.vim/plugged')
   " Working Directory
   Plug 'airblade/vim-rooter'
 
+  Plug 'mhinz/vim-startify'
+
 call plug#end()
 " Leader
 let mapleader = ","
@@ -89,8 +94,7 @@ let g:syntastic_check_on_wq = 0
 " Exit Vim if NERDTree is the only window left.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
 
 nmap <leader>l :bnext<CR>
 nmap <leader>h :bprevious<CR>
@@ -178,7 +182,7 @@ let g:ale_linters = {
       \   'css': ['stylelint'],
       \}
 let g:ale_fixers = {
-      \   'python': ['yapf'],
+      \   'python': ['autopep8'],
       \   'xml': ['xmllint'],
       \   'java': ['uncrustify'],
       \   'c': ['uncrustify'],
@@ -195,10 +199,11 @@ let g:ale_sign_error = '✘✘'
 let g:ale_sign_warning = '⚠⚠'
 
 "TagBar
-" Ctrl-b to open Tagbar
-map <C-b> :TagbarToggle<CR>
+" Ctrl-t to open Tagbar
+map <C-t> :TagbarToggle<CR>
 " Path to Ctags exe
 let g:tagbar_ctags_bin = '~/Documents/ctags/ctags-2021-02-09_p5.9.20210207.0-3-gee5f9c55-x64/ctags.exe'
+let g:tagbar_autofocus = 1
 
 " Line numbering
 set relativenumber
