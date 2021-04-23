@@ -59,6 +59,12 @@ call plug#begin('~/.vim/plugged')
   Plug 'mhinz/vim-startify'
 call plug#end()
 
+" Resizing of windows
+nmap <M-Right> :vertical resize +1<CR>
+nmap <M-Left> :vertical resize -1<CR>
+nmap <M-Down> :resize +1<CR>
+nmap <M-Up> :resize -1<CR>
+
 "Terminal
 if has('win32')
   set shell=powershell
