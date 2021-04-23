@@ -7,7 +7,12 @@ set nocompatible
 " Specify a directory for plugins
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-"" Indentation
+
+  "" Folding
+  Plug 'tmhedberg/SimpylFold'
+  Plug 'Konfekt/FastFold'
+
+  "" Indentation
   Plug 'Vimjas/vim-python-pep8-indent'
 
   "" Syntax highlighting
@@ -112,7 +117,6 @@ let g:tagbar_autofocus = 1
 nnoremap <space> za
 set foldlevel=10
 filetype plugin indent on
-autocmd Filetype java AnyFoldActivate
 
 " Ctrl-p
 nmap <C-P> :FZF<CR>
