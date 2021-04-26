@@ -16,7 +16,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'Vimjas/vim-python-pep8-indent'
 
   "" Syntax highlighting
-  Plug 'dense-analysis/ale'
   Plug 'uiiaoo/java-syntax.vim'
   Plug 'sheerun/vim-polyglot'
   Plug 'yyq123/vim-syntax-logfile'
@@ -29,7 +28,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'majutsushi/tagbar'
 
   "" Errors
-  Plug 'vim-syntastic/syntastic'
+  Plug 'dense-analysis/ale'
 
   "" Smart commenting
   Plug 'preservim/nerdcommenter'
@@ -64,6 +63,21 @@ call plug#begin('~/.vim/plugged')
   Plug 'mhinz/vim-startify'
 call plug#end()
 
+" Ale
+let g:ale_fixers = {
+\   'python': [
+\        'remove_trailing_lines',
+\        'trim_whitespace',
+\        'autoimport',
+\        'autopep8',
+\  ],
+\}
+let g:ale_hover_cursor = 1
+let g:ale_set_balloons = 1
+nmap <leader>n :ALENext<CR>
+nmap <leader>N :ALEPrevious<CR>
+nmap <F10> <Plug>(ale_fix)
+
 " Resizing of windows
 nmap <M-Right> :vertical resize +1<CR>
 nmap <M-Left> :vertical resize -1<CR>
@@ -77,34 +91,6 @@ end
 if has('unix')
   set shell=cmd
 end
-
-"ALE
-let g:ale_linters = {
-      \   'python': ['flake8', 'pylint'],
-      \   'ruby': ['standardrb', 'rubocop'],
-      \   'javascript': ['eslint'],
-      \   'rst': ['rstcheck'],
-      \   'java': ['javac'],
-      \   'xml': ['xmllint'],
-      \   'css': ['stylelint'],
-      \}
-let g:ale_fixers = {
-      \   'python': ['black'],
-      \   'xml': ['xmllint'],
-      \   'java': ['uncrustify'],
-      \   'c': ['uncrustify'],
-      \   'css': ['prettier'],
-      \}
-nmap <F10> :ALEFix<CR>
-let g:ale_fix_on_save = 0
-"Shorten error/warning flags
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-"I have some custom icons for errors and warnings but feel free to change them.
-let g:ale_sign_error = '✘✘'
-let g:ale_sign_warning = '⚠⚠'
-
-
 
 "TagBar
 " Ctrl-t to open Tagbar
@@ -145,9 +131,6 @@ syntax on
 let python_highlight_all=1
 
 " NERDTree settings
-" Exit Vim if NERDTree is the only window left.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-    \ quit | endif
 nnoremap <C-n> :NERDTreeToggle<CR>
 
 
@@ -160,20 +143,10 @@ set lazyredraw
 set regexpengine=1
 
 " Session hotkeys
-let g:sessions_dir = '$HOME/.vim/vim-sessions'
-exec 'nnoremap <Leader>ss :mks! ' . g:sessions_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
-exec 'nnoremap <Leader>sr :so ' . g:sessions_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
+let g:session_dir = '$HOME/.vim/vim-sessions'
+exec 'nnoremap <Leader>ss :mks! ' . g:session_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
+exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
 
-
-" Syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 " Leader
 let mapleader = ","
@@ -217,7 +190,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Backup and swap files in specific temp directory
+ " Backup and swap files in specific temp directory
 if has('win32')
   set directory=$HOME/AppData/Local/Temp/
   set backupdir=$HOME/AppData/Local/Temp/
