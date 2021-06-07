@@ -18,7 +18,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'Vimjas/vim-python-pep8-indent'
 
   "" Syntax highlighting
-  Plug 'dense-analysis/ale'
   Plug 'uiiaoo/java-syntax.vim'
   Plug 'sheerun/vim-polyglot'
   Plug 'yyq123/vim-syntax-logfile'
@@ -31,7 +30,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'majutsushi/tagbar'
 
   "" Errors
-  Plug 'vim-syntastic/syntastic'
+  Plug 'dense-analysis/ale'
 
   "" Smart commenting
   Plug 'preservim/nerdcommenter'
@@ -47,7 +46,7 @@ call plug#begin('~/.vim/plugged')
   "" File browsing
   Plug 'scrooloose/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'junegunn/fzf'
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
 
   "" Git
@@ -77,7 +76,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'pechorin/any-jump.vim'
 call plug#end()
 
-"
+" Terminal
 let g:slime_target = "vimterminal"
 
 " Resizing of windows
@@ -111,6 +110,8 @@ let g:ale_fixers = {
       \   'c': ['uncrustify'],
       \   'css': ['prettier'],
       \}
+nmap <leader>n :ALENext<CR>
+nmap <leader>N :ALEPrevious<CR>
 nmap <F10> :ALEFix<CR>
 let g:ale_fix_on_save = 0
 "Shorten error/warning flags
@@ -127,7 +128,6 @@ augroup qs_colors
   autocmd ColorScheme * highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
   autocmd ColorScheme * highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
 augroup END
-
 
 "TagBar
 " Ctrl-t to open Tagbar
@@ -169,6 +169,9 @@ set laststatus=2 " Always display status bar
 syntax on
 let python_highlight_all=1
 
+" NERDTree settings
+nnoremap <C-n> :NERDTreeToggle<CR>
+
 " Rooter settings
 let g:rooter_patterns = ['.git', 'Makefile', 'setup.py', 'pom.xml']
 
@@ -178,20 +181,10 @@ set lazyredraw
 set regexpengine=1
 
 " Session hotkeys
-let g:sessions_dir = '$HOME/.vim/vim-sessions'
-exec 'nnoremap <Leader>ss :mks! ' . g:sessions_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
-exec 'nnoremap <Leader>sr :so ' . g:sessions_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
+let g:session_dir = '$HOME/.vim/vim-sessions'
+exec 'nnoremap <Leader>ss :mks! ' . g:session_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
+exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
 
-
-" Syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 " Leader
 let mapleader = ","
@@ -235,7 +228,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Backup and swap files in specific temp directory
+ " Backup and swap files in specific temp directory
 if has('win32')
   set directory=$HOME/AppData/Local/Temp/
   set backupdir=$HOME/AppData/Local/Temp/
