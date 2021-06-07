@@ -40,6 +40,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'yggdroot/indentline'
 
   "" Colors
+  Plug 'jsit/toast.vim'
   Plug 'sonph/onehalf', { 'rtp': 'vim' }
   Plug 'ryanoasis/vim-devicons'
 
@@ -66,7 +67,14 @@ call plug#begin('~/.vim/plugged')
   "" LateX
   Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
+  "" Startup
+  Plug 'dstein64/vim-startuptime'
   Plug 'mhinz/vim-startify'
+
+  "" Searching
+  Plug 'unblevable/quick-scope'
+  Plug 'itchyny/vim-cursorword'
+  Plug 'pechorin/any-jump.vim'
 call plug#end()
 
 "
@@ -113,6 +121,13 @@ let g:ale_sign_error = '✘✘'
 let g:ale_sign_warning = '⚠⚠'
 
 
+" Quick-Scope Colors
+augroup qs_colors
+  autocmd!
+  autocmd ColorScheme * highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
+augroup END
+
 
 "TagBar
 " Ctrl-t to open Tagbar
@@ -141,7 +156,9 @@ nmap <silent> t<C-g> :TestVisit<CR>
 
 " Colors
 set t_Co=256
-colorscheme onehalfdark
+set background=dark
+colorscheme toast
+"colorscheme onehalfdark
 let g:airline_theme = 'onehalfdark'
 
 " Powerline options
@@ -151,13 +168,6 @@ set laststatus=2 " Always display status bar
 " Syntax highlights
 syntax on
 let python_highlight_all=1
-
-" NERDTree settings
-" Exit Vim if NERDTree is the only window left.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-    \ quit | endif
-nnoremap <C-n> :NERDTreeToggle<CR>
-
 
 " Rooter settings
 let g:rooter_patterns = ['.git', 'Makefile', 'setup.py', 'pom.xml']
