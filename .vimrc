@@ -7,6 +7,8 @@ set nocompatible
 " Specify a directory for plugins
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+  " Send To Terminal
+  Plug 'jpalardy/vim-slime'
 
   "" Surround Text
   Plug 'tpope/vim-surround'
@@ -40,6 +42,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'yggdroot/indentline'
 
   "" Colors
+  Plug 'jsit/toast.vim'
   Plug 'sonph/onehalf', { 'rtp': 'vim' }
   Plug 'altercation/vim-colors-solarized'
   Plug 'ryanoasis/vim-devicons'
@@ -64,23 +67,21 @@ call plug#begin('~/.vim/plugged')
   "" Working Directory
   Plug 'airblade/vim-rooter'
 
+  "" LateX
+  Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+
+  "" Startup
+  Plug 'dstein64/vim-startuptime'
   Plug 'mhinz/vim-startify'
+
+  "" Searching
+  Plug 'unblevable/quick-scope'
+  Plug 'itchyny/vim-cursorword'
+  Plug 'pechorin/any-jump.vim'
 call plug#end()
 
-" Ale
-let g:ale_fixers = {
-\   'python': [
-\        'remove_trailing_lines',
-\        'trim_whitespace',
-\        'autoimport',
-\        'autopep8',
-\  ],
-\}
-let g:ale_hover_cursor = 1
-let g:ale_set_balloons = 1
-nmap <leader>n :ALENext<CR>
-nmap <leader>N :ALEPrevious<CR>
-nmap <F10> <Plug>(ale_fix)
+" Terminal
+let g:slime_target = "vimterminal"
 
 " Resizing of windows
 nmap <M-Right> :vertical resize +1<CR>
@@ -95,6 +96,42 @@ end
 if has('unix')
   set shell=cmd
 end
+
+"ALE
+let g:ale_linters = {
+      \   'python': ['flake8', 'pylint'],
+      \   'ruby': ['standardrb', 'rubocop'],
+      \   'javascript': ['eslint'],
+      \   'rst': ['rstcheck'],
+      \   'java': ['javac'],
+      \   'xml': ['xmllint'],
+      \   'css': ['stylelint'],
+      \}
+let g:ale_fixers = {
+      \   'python': ['black'],
+      \   'xml': ['xmllint'],
+      \   'java': ['uncrustify'],
+      \   'c': ['uncrustify'],
+      \   'css': ['prettier'],
+      \}
+nmap <leader>n :ALENext<CR>
+nmap <leader>N :ALEPrevious<CR>
+nmap <F10> :ALEFix<CR>
+let g:ale_fix_on_save = 0
+"Shorten error/warning flags
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+"I have some custom icons for errors and warnings but feel free to change them.
+let g:ale_sign_error = '✘✘'
+let g:ale_sign_warning = '⚠⚠'
+
+
+" Quick-Scope Colors
+augroup qs_colors
+  autocmd!
+  autocmd ColorScheme * highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
+augroup END
 
 "TagBar
 " Ctrl-t to open Tagbar
@@ -124,7 +161,7 @@ nmap <silent> t<C-g> :TestVisit<CR>
 " Colors
 set t_Co=256
 set background=dark
-colorscheme solarized
+colorscheme toast
 let g:airline_theme = 'onehalfdark'
 
 " Powerline options
@@ -137,7 +174,6 @@ let python_highlight_all=1
 
 " NERDTree settings
 nnoremap <C-n> :NERDTreeToggle<CR>
-
 
 " Rooter settings
 let g:rooter_patterns = ['.git', 'Makefile', 'setup.py', 'pom.xml']
