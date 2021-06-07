@@ -7,6 +7,8 @@ set nocompatible
 " Specify a directory for plugins
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+  " Send To Terminal
+  Plug 'jpalardy/vim-slime'
 
   "" Folding
   Plug 'tmhedberg/SimpylFold'
@@ -61,8 +63,14 @@ call plug#begin('~/.vim/plugged')
   "" Working Directory
   Plug 'airblade/vim-rooter'
 
+  "" LateX
+  Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+
   Plug 'mhinz/vim-startify'
 call plug#end()
+
+"
+let g:slime_target = "vimterminal"
 
 " Resizing of windows
 nmap <M-Right> :vertical resize +1<CR>
