@@ -8,6 +8,9 @@ set nocompatible
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
+  "" Surround Text
+  Plug 'tpope/vim-surround'
+
   "" Folding
   Plug 'tmhedberg/SimpylFold'
   Plug 'Konfekt/FastFold'
@@ -38,6 +41,7 @@ call plug#begin('~/.vim/plugged')
 
   "" Colors
   Plug 'sonph/onehalf', { 'rtp': 'vim' }
+  Plug 'altercation/vim-colors-solarized'
   Plug 'ryanoasis/vim-devicons'
 
   "" File browsing
@@ -119,7 +123,8 @@ nmap <silent> t<C-g> :TestVisit<CR>
 
 " Colors
 set t_Co=256
-colorscheme onehalfdark
+set background=dark
+colorscheme solarized
 let g:airline_theme = 'onehalfdark'
 
 " Powerline options
