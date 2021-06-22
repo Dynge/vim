@@ -10,7 +10,9 @@ call plug#begin('~/.vim/plugged')
   " Send To Terminal
   Plug 'jpalardy/vim-slime'
 
-  "" Surround Text
+  "" Text Editing
+  Plug 'rstacruz/vim-closer'
+  Plug 'svermeulen/vim-subversive'
   Plug 'tpope/vim-surround'
 
   "" Folding
@@ -46,6 +48,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'sonph/onehalf', { 'rtp': 'vim' }
   Plug 'altercation/vim-colors-solarized'
   Plug 'ryanoasis/vim-devicons'
+  Plug 'stillwwater/vim-nebula'
+  Plug 'sainnhe/edge'
 
   "" File browsing
   Plug 'scrooloose/nerdtree'
@@ -67,8 +71,9 @@ call plug#begin('~/.vim/plugged')
   "" Working Directory
   Plug 'airblade/vim-rooter'
 
-  "" LateX
+  "" LateX & Markdown
   Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
   "" Startup
   Plug 'dstein64/vim-startuptime'
@@ -159,10 +164,21 @@ nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
 
 " Colors
+if has("gui_running")
+  set guifont=JetbrainsMono_Nerd_Font_Mono:h10
+endif
 set t_Co=256
 set background=dark
-colorscheme toast
 let g:airline_theme = 'onehalfdark'
+" Important!!
+if has('termguicolors')
+  set termguicolors
+endif
+" The configuration options should be placed before `colorscheme edge`.
+let g:edge_style = 'aura'
+let g:edge_enable_italic = 1
+let g:edge_disable_italic_comment = 1
+colorscheme edge
 
 " Powerline options
 set laststatus=2 " Always display status bar
@@ -187,7 +203,6 @@ set regexpengine=1
 let g:session_dir = '$HOME/.vim/vim-sessions'
 exec 'nnoremap <Leader>ss :mks! ' . g:session_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
 exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
-
 
 " Leader
 let mapleader = ","
