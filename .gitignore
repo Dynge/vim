@@ -1,3 +1,4 @@
-vim/
-*~
-vim82/
+*
+!.vimrc
+!README.md
+!.gitignore

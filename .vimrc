@@ -1,6 +1,3 @@
-" Vim with all enhancements
-source $VIMRUNTIME/vimrc_example.vim
-
 set encoding=utf-8
 set nocompatible
 
@@ -96,7 +93,7 @@ nmap <M-Up> :resize -1<CR>
 
 "Terminal
 if has('win32')
-  set shell=powershell
+  set shell=pwsh
 end
 if has('unix')
   set shell=cmd
@@ -111,14 +108,14 @@ let g:ale_linters = {
       \   'java': ['javac'],
       \   'xml': ['xmllint'],
       \   'css': ['stylelint'],
-      \}
+      \ }
 let g:ale_fixers = {
       \   'python': ['black'],
       \   'xml': ['xmllint'],
       \   'java': ['uncrustify'],
       \   'c': ['uncrustify'],
       \   'css': ['prettier'],
-      \}
+      \ }
 nmap <leader>n :ALENext<CR>
 nmap <leader>N :ALEPrevious<CR>
 nmap <F10> :ALEFix<CR>
