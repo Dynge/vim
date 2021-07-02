@@ -15,6 +15,7 @@ call plug#begin('~/.vim/plugged')
   "" Folding
   Plug 'tmhedberg/SimpylFold'
   Plug 'Konfekt/FastFold'
+  Plug 'pseewald/vim-anyfold'
 
   "" Indentation
   Plug 'Vimjas/vim-python-pep8-indent'
@@ -30,6 +31,7 @@ call plug#begin('~/.vim/plugged')
 
   "" List of methods and functions in file
   Plug 'majutsushi/tagbar'
+  Plug 'ludovicchabant/vim-gutentags'
 
   "" Errors
   Plug 'dense-analysis/ale'
@@ -93,7 +95,7 @@ nmap <M-Up> :resize -1<CR>
 
 "Terminal
 if has('win32')
-  set shell=pwsh
+  set shell=cmd
 end
 if has('unix')
   set shell=cmd
@@ -139,12 +141,18 @@ augroup END
 " Ctrl-t to open Tagbar
 map <C-t> :TagbarToggle<CR>
 " Path to Ctags exe
-let g:tagbar_ctags_bin = '~/Documents/ctags/ctags-2021-02-09_p5.9.20210207.0-3-gee5f9c55-x64/ctags.exe'
+let g:tagbar_ctags_bin = 'C:/ProgramData/chocolatey/bin/ctags.exe'
 let g:tagbar_autofocus = 1
 
 " Folding
 nnoremap <space> za
-set foldlevel=10
+autocmd Filetype java AnyFoldActivate
+autocmd Filetype js AnyFoldActivate
+autocmd Filetype css AnyFoldActivate
+autocmd Filetype html AnyFoldActivate
+autocmd Filetype xml AnyFoldActivate
+let g:anyfold_fold_comments=1
+set foldlevel=1
 filetype plugin indent on
 
 " Ctrl-p
