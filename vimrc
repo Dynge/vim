@@ -32,6 +32,7 @@ call plug#begin('~/.vim/plugged')
   "" List of methods and functions in file
   Plug 'majutsushi/tagbar'
   Plug 'ludovicchabant/vim-gutentags'
+  Plug 'pechorin/any-jump.vim'
 
   "" Errors
   Plug 'dense-analysis/ale'
@@ -138,6 +139,9 @@ augroup qs_colors
 augroup END
 
 "TagBar
+" Alt-right/left to navigate forward/backward in the tags stack
+map <M-Left> <C-T>
+map <M-Right> <C-]>
 " Ctrl-t to open Tagbar
 map <C-t> :TagbarToggle<CR>
 " Path to Ctags exe
