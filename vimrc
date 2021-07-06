@@ -89,10 +89,10 @@ call plug#end()
 let g:slime_target = "vimterminal"
 
 " Resizing of windows
-nmap <M-Right> :vertical resize +1<CR>
-nmap <M-Left> :vertical resize -1<CR>
-nmap <M-Down> :resize +1<CR>
-nmap <M-Up> :resize -1<CR>
+nmap <Right> :vertical resize +1<CR>
+nmap <Left> :vertical resize -1<CR>
+nmap <Down> :resize +1<CR>
+nmap <Up> :resize -1<CR>
 
 "Terminal
 if has('win32')
