@@ -286,9 +286,9 @@ if has('win32')
   set undodir=$HOME/AppData/Local/Temp/
 endif
 if has('unix')
-  set directory=$HOME/tmp/
-  set backupdir=$HOME/tmp/
-  set undodir=$HOME/tmp/
+  set directory=/tmp/
+  set backupdir=/tmp/
+  set undodir=/tmp/
 endif
 
 " Virtual python env
