@@ -17,6 +17,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'Konfekt/FastFold'
   Plug 'pseewald/vim-anyfold'
 
+  "" Environments
+  Plug 'petobens/poet-v'
+
   "" Indentation
   Plug 'Vimjas/vim-python-pep8-indent'
 
@@ -25,6 +28,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'sheerun/vim-polyglot'
   Plug 'yyq123/vim-syntax-logfile'
   Plug 'mechatroner/rainbow_csv'
+  Plug 'frazrepo/vim-rainbow'
 
   "" AutoCompletion
   Plug 'codota/tabnine-vim'
@@ -56,10 +60,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
+  Plug 'pechorin/any-jump.vim'
+
+  "" Search in files
+  Plug 'eugen0329/vim-esearch'
 
   "" Git
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
+  Plug 'samoshkin/vim-mergetool'
 
   "" Powerline
   Plug 'vim-airline/vim-airline'
@@ -72,6 +81,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'airblade/vim-rooter'
 
   "" LateX & Markdown
+  Plug 'godlygeek/tabular'
+  Plug 'plasticboy/vim-markdown'
+  "Plug 'gabrielelana/vim-markdown'
   Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
@@ -83,7 +95,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'unblevable/quick-scope'
   Plug 'itchyny/vim-cursorword'
   Plug 'pechorin/any-jump.vim'
+
+  "" Sessions
+  Plug 'tpope/vim-obsession'
+
 call plug#end()
+
+" Change working directory to path of open buffer
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+
+" Rename under cursor
+:command -nargs=1 Rename %s/<c-r><c-w>/<f-args>/i
 
 " Terminal
 let g:slime_target = "vimterminal"
@@ -96,7 +118,7 @@ nmap <Up> :resize -1<CR>
 
 "Terminal
 if has('win32')
-  set shell=cmd
+  set shell=pwsh
 end
 if has('unix')
   set shell=cmd
@@ -104,16 +126,16 @@ end
 
 "ALE
 let g:ale_linters = {
-      \   'python': ['flake8', 'pylint'],
+      \   'python': ['flake8', "bandit"],
       \   'ruby': ['standardrb', 'rubocop'],
       \   'javascript': ['eslint'],
-      \   'rst': ['rstcheck'],
       \   'java': ['javac'],
       \   'xml': ['xmllint'],
       \   'css': ['stylelint'],
+      \   'rst': [],
       \ }
 let g:ale_fixers = {
-      \   'python': ['black'],
+      \   'python': ['black', 'isort'],
       \   'xml': ['xmllint'],
       \   'java': ['uncrustify'],
       \   'c': ['uncrustify'],
@@ -127,8 +149,10 @@ let g:ale_fix_on_save = 0
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 "I have some custom icons for errors and warnings but feel free to change them.
-let g:ale_sign_error = '✘✘'
-let g:ale_sign_warning = '⚠⚠'
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+" Flake8 Settings
+let g:ale_python_flake8_options = '--max-line-length=88'
 
 
 " Quick-Scope Colors
@@ -166,11 +190,11 @@ nmap <C-P> :FZF<CR>
 
 " Testing macros
 " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
-nmap <silent> t<C-n> :TestNearest<CR>
-nmap <silent> t<C-f> :TestFile<CR>
-nmap <silent> t<C-s> :TestSuite<CR>
-nmap <silent> t<C-l> :TestLast<CR>
-nmap <silent> t<C-g> :TestVisit<CR>
+nmap <silent> t<C-n> :TestNearest -vv<CR>
+nmap <silent> t<C-f> :TestFile -vv<CR>
+nmap <silent> t<C-s> :TestSuite -vv<CR>
+nmap <silent> t<C-l> :TestLast -vv<CR>
+nmap <silent> t<C-g> :TestVisit -vv<CR>
 
 " Colors
 if has("gui_running")
@@ -266,6 +290,11 @@ if has('unix')
   set backupdir=$HOME/tmp/
   set undodir=$HOME/tmp/
 endif
+
+" Virtual python env
+let g:poetv_executables = ['poetry']
+"let g:poetv_auto_activate = 1
+"let g:poetv_set_environment = 1
 
 " Use the internal diff if available.
 " Otherwise use the special 'diffexpr' for Windows.
