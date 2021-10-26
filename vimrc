@@ -1,5 +1,6 @@
 set encoding=utf-8
 set nocompatible
+set noshowmode " doesnt show -insert- flag twice (because of lightline)
 
 " Specify a directory for plugins
 " - Avoid using standard Vim directory names like 'plugin'
@@ -11,6 +12,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'rstacruz/vim-closer'
   Plug 'svermeulen/vim-subversive'
   Plug 'tpope/vim-surround'
+  Plug 'chaoren/vim-wordmotion'
 
   "" Folding
   Plug 'tmhedberg/SimpylFold'
@@ -71,8 +73,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'samoshkin/vim-mergetool'
 
   "" Powerline
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
+  Plug 'itchyny/lightline.vim'
+  Plug 'sainnhe/lightline_foobar.vim'
 
   "" Testing
   Plug 'vim-test/vim-test'
@@ -215,6 +217,10 @@ colorscheme edge
 
 " Powerline options
 set laststatus=2 " Always display status bar
+" use lightline-buffer in lightline
+let g:lightline = {
+      \ 'colorscheme': 'one'
+      \ }
 
 
 " Syntax highlights
